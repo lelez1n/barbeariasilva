@@ -254,6 +254,7 @@ footer.site{border-top:1px solid var(--line);padding:30px 0 calc(30px + env(safe
   .reveal.pre{opacity:0;transform:translateY(16px)}
   .reveal.pre.in{opacity:1;transform:none}
 }
+@media (prefers-reduced-motion:reduce){.reveal{transition:opacity .8s ease var(--d,0ms)}.reveal.pre{opacity:0}.reveal.pre.in{opacity:1}}
 </style>
 </head>
 <body>
@@ -508,7 +509,7 @@ footer.site{border-top:1px solid var(--line);padding:30px 0 calc(30px + env(safe
   document.querySelectorAll('.reveal').forEach(n => {
     const p = n.parentElement, i = groups.get(p) || 0; groups.set(p, i + 1);
     if (!n.style.getPropertyValue('--d')) n.style.setProperty('--d', Math.min(i, 4) * 70 + 'ms');
-    if (!reduce && n.getBoundingClientRect().top > fold) { n.classList.add('pre'); io.observe(n); }
+    if (n.getBoundingClientRect().top > fold) { n.classList.add('pre'); io.observe(n); }
   });
   /* charts draw when seen */
   const once = (el, cls) => { if (reduce) { el.classList.remove(cls); return; } const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => el.classList.remove(cls), 250); o.disconnect(); } }), { threshold:.35 }); o.observe(el); };
